@@ -41,22 +41,16 @@ bool TCPServer::init(Uint16 port)
 		printf("SDLNet_ResolveHost:%s\n", SDLNet_GetError());
 		return false;
 	}
-	//output
-	Uint32 ipaddr = SDL_SwapBE32(ip.host);
-	printf("IP Address: %d.%d.%d.%d\n",
-			ipaddr>>24,
-			(ipaddr>>16) & 0xff,
-			(ipaddr>>8) & 0xff,
-			(ipaddr & 0xff));
-	//获取域名
-	const char* host = SDLNet_ResolveIP(&ip);
-
-	if (host != nullptr)
-		printf("Hostname : %s\n", host);
-	else
-		printf("Hostname : N/A\n");
 	//创建服务器套接字
 	_server = SDLNet_TCP_Open(&ip);
+
+	IPaddress localhost_ip;
+	SDLNet_ResolveHost(&localhost_ip, nullptr, 0);
+	SDLNet_ResolveHost(&localhost_ip, SDLNet_ResolveIP(&localhost_ip), 0);
+	//output
+	Uint32 ipaddr = 0;
+	std::string text = getLocalHostIP(ipaddr);
+	printf("the local ip is: %s\n", text.c_str());
 
 	return true;
 }
