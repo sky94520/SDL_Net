@@ -330,13 +330,13 @@ std::vector<Client>::iterator TCPServer::removeClient(std::vector<Client>::itera
 {
 	const std::string& name = it->name;
 	TCPsocket socket = it->socket;
-
-	it = _clients.erase(it);
-	SDLNet_TCP_Close(socket);
 	//发送数据
 	printf("<-- %s\n", name.c_str());
 	std::string text = StringUtils::format("<--%s", name.c_str());
 	sendAll(text.c_str());
+
+	it = _clients.erase(it);
+	SDLNet_TCP_Close(socket);
 
 	return it;
 }
