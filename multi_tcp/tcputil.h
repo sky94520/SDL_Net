@@ -1,7 +1,7 @@
 #ifndef tcputil_h
 #define tcputil_h 1
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #else
 	#include <sys/socket.h>
 	#include <sys/ioctl.h>

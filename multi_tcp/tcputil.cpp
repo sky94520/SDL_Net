@@ -2,8 +2,8 @@
 
 char *getMsg(TCPsocket sock, char **buf)
 {
-	Uint32 len,result;
-	static char *_buf;
+	Uint32 len = 0,result = 0;
+	static char *_buf = nullptr;
 
 	/* allow for a NULL buf, use a static internal one... */
 	if(!buf)
@@ -87,7 +87,7 @@ int putMsg(TCPsocket sock,const char *buf)
 
 std::string getLocalHostIP(Uint32& num_ip)
 {
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	char text[20] = {};
 	IPaddress localhost_ip;
 	SDLNet_ResolveHost(&localhost_ip, nullptr, 0);
